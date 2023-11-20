@@ -1,0 +1,16 @@
+<html mxlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="/styles/index.css" />
+    <head th:replace="~{/basic/header :: headerFragmentHead}"></head>
+    <head th:replace="~{${path} :: ${contentHead}}"></head>
+  </head>
+  <body>
+    <div id="root">
+      <div id="header" th:replace="~{/basic/header :: headerFragment}"></div>
+      <div id="menu"></div>
+      <div id="content" th:insert="~{${path} :: ${content}}"></div>
+    </div>
+  </body>
+</html>
