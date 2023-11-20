@@ -7,18 +7,34 @@ import org.springframework.stereotype.Service;
 
 import com.kyungiljava4.board.board.dao.BoardDAO;
 import com.kyungiljava4.board.board.domain.Board;
+import com.kyungiljava4.board.user.service.UserService;
 
 @Service
 public class BoardService {
-    @Autowired
-    private BoardDAO boardDAO;
+	@Autowired
+	private BoardDAO boardDAO;
+	
+	public void add(Board board) {
+		boardDAO.add(board);
+	}
 
-    public void add(Board board) {
-        boardDAO.add(board);
-    }
+	public List<Board> getAll() {
+		List<Board> board = boardDAO.getAll();
+		return board;
+	}
 
-    public List<Board> getAll() {
-    	List<Board> board = boardDAO.getAll();	
-        return board;
-    }
 }
+/*
+ * 
+ * @Service public class BoardService {
+ * 
+ * @Autowired BoardDAO boardDAO;
+ * 
+ * public void add(Board board) { boardDAO.add(board); }
+ * 
+ * public List<Board> getAll() { return boardDAO.getAll(); } }
+ * 
+ * 
+ * 
+ * 
+ */

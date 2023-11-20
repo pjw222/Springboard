@@ -3,21 +3,60 @@
     <link rel="stylesheet" href="/styles/index.css" />
 </head>
 <body>
-    <div th:fragment="boardFragment" class="board">
-        <form th:action="@{/board/create}" method="post">
+    <div th:fragment="boardFragment" class="board container">
+        <!-- <form th:action="@{/board/create}" method="post">
             <label for="title">제목:</label>
             <input type="text" id="title" name="title" required/><br/>
             <label for="content"> 내용:</label>
             <textarea id="content" name="content" required></textarea><br/>
             <button type="submit">글 작성</button>
+        </form>   -->
+        <form action="/add" method="post">
+            <!-- <input type="text" name="title" /> -->
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="title" id="floatingInput" placeholder="제목">
+                <label for="floatingInput">제목</label>
+            </div>           
+            <div class="form-floating mb-3">
+                <textarea class="form-control" name="content" placeholder="내용" id="floatingTextarea"></textarea>
+                <label for="floatingTextarea">내용</label>
+              </div>
+            <button class="btn btn-primary">작성</button>
+            <a href="/regist"><button type="button" class="btn btn-outline-secondary">회원가입</button></a>
+
         </form>
         <br/>
-        <h2>게시판 목록</h2>
-        <ul>
+        <h2>게시판 목록
+            <small class="text-muted" th:text="${#lists.size(boards)} + '개의 게시물'"></small>
+        </h2>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">작성일자</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="board:${boards}" th:object="${board}">
+                <th scope="row" th:text="*{id}"></th>
+                <td th:text="*{title}">Mark</td>
+                <td th:text="*{userId}">Otto</td>
+                <td th:text="*{createdAt}">@mdo</td>
+              </tr>
+            </tbody>
+          </table>
+       
+        <!-- <ul>
             <li th:each="board : ${boards}" th:object="${board}">
                작성자 : <span th:text="${board.title}"></span> - 내용 : <span th:text="${board.content}"></span>
             </li>
-        </ul>
+            <li th:each="board:${boards}" th:object="${board}">
+                <h1 th:text="*{title}"></h1>
+                <p th:text="*{userId}"></p>
+            </li>
+        </ul> -->
     </div>
     <!-- <div th:fragment="boardFragment" class="board">
         오늘의 숙제~<br />dao, service 추가해서 게시판 글작성, 목록 보기 만들기 <br /> UI는 간단하게 여기서 작성해서 완성하기

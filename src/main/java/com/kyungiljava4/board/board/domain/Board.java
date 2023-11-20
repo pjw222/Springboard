@@ -2,6 +2,8 @@ package com.kyungiljava4.board.board.domain;
 
 import java.sql.Timestamp;
 
+import com.kyungiljava4.board.user.domain.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,9 +27,4 @@ public class Board {
     private boolean isWithdrawn = false;
     @NonNull
     private int userId;
-    
-    public Board(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
 }

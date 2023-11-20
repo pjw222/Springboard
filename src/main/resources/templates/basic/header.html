@@ -1,10 +1,60 @@
-<html lang="ko" mxlns:th="http:/www.thymeleaf.org">
+<html lang="ko" xmlns:th="http:/www.thymeleaf.org">
 <head th:fragment="headerFragmentHead">
     <link rel="stylesheet" href="/styles/header.css" />
 </head>
 <body>
     <div th:fragment="headerFragment" id="header">
         <h1 th:text="${title}"></h1>
+        <div th:if="${session.userId != null}">
+            <span th:text="${session.userName}" class="btn btn-secondary"></span>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-secondary">로그아웃</button>
+            </form>
+        </div>
+        <div th:unless="${session.userId != null}">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                로그인
+            </button>
+            <a href="/regist">
+                <button type="button" class="btn btn-outline-secondary">회원가입</button>
+            </a>
+        </div>
+        <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="loginModalLabel">로그인을 해주세요</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/login" method="post">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                  <label for="inputPassword6" class="col-form-label">아이디 : </label>
+                                </div>
+                                <div class="col-auto">
+                                  <input type="text" id="inputPassword6" name="userId" class="form-control" aria-describedby="passwordHelpInline" required>
+                                </div>
+                              </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                  <label for="inputPassword6" class="col-form-label">비밀번호 : </label>
+                                </div>
+                                <div class="col-auto">
+                                  <input type="password" id="inputPassword6" name="password" class="form-control" aria-describedby="passwordHelpInline" required>
+                                </div>
+                                <div class="col-auto">
+                                </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                        <button type="submit" class="btn btn-primary">확인</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
