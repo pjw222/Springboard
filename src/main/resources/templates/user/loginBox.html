@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http:/www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/header.css" />
+</head>
+<body>
+    <div th:fragment="loginFragment">
+        <div th:if="${session.userName != null}" class="d-flex align-items-center mb-0">
+            <span class="border border-primary" th:text="${session.userName}"></span>
+            <form action="/logout" method="post" >
+                <button type="submit" class="btn btn-secondary btn-sm">로그아웃</button>
+            </form>
+        </div>
+        <form action="/login" method="post" class="d-flex align-items-center mb-0" th:if="${session.userName == null}" v>
+            <div class="input-group">
+                <input type="text" class="form-control form-control-sm" placeholder="ID" id="id" name="userId" />
+                <input type="password" class="form-control form-control-sm" placeholder="PW" id="password" name="password" /> 
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">로그인</button>
+            <a href="/user/regist"><button type="button" class="btn btn-outline-secondary btn-sm">회원가입</button></a>
+        </form>
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                로그인
+            </button>
+        <div class="modal fade" id="loginModal" name="loginError" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="loginModalLabel">로그인을 해주세요</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                </div>
+                                <div class="col-auto">
+                                </div>
+                              </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">   
+                                </div>
+                                <div class="col-auto">
+                                </div>
+                                <div class="col-auto">
+                                </div>                   
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</body>
+</html>

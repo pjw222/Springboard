@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko" mxlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="registFragmentHead">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>회원가입페이지</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker3.min.css" integrity="sha512-aQb0/doxDGrw/OC7drNaJQkIKFu6eSWnVMAwPN64p6sZKeJ4QCDYL42Rumw2ZtL8DB9f66q4CnLIUnAw28dEbg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker3.standalone.min.css" integrity="sha512-t+00JqxGbnKSfg/4We7ulJjd3fGJWsleNNBSXRk9/3417ojFqSmkBfAJ/3+zpTFfGNZyKxPVGwWvaRuGdtpEEA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.standalone.min.css" integrity="sha512-D5/oUZrMTZE/y4ldsD6UOeuPR4lwjLnfNMWkjC0pffPTCVlqzcHTNvkn3dhL7C0gYifHQJAIrRTASbMvLmpEug==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+   <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/locales/bootstrap-datepicker.ko.min.js" integrity="sha512-L4qpL1ZotXZLLe8Oo0ZyHrj/SweV7CieswUODAAPN/tnqN3PA1P+4qPu5vIryNor6HQ5o22NujIcAZIfyVXwbQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </head>
+<body>
+	<div th:fragment="registFragment" class="container">
+		<form id="registrationForm" action="/user/regist" method="post" class="row">
+			<div class="input-group mb-3 mt-3">
+				<span class="input-group-text" id="user-id">ID</span>
+				<input type="text" class="form-control" placeholder="ID" aria-label="user-id" aria-describedby="user-id"
+					name="userId" id="userId">
+				<span class="input-group-text" id="password">PW</span>
+				<input type="password" class="form-control" placeholder="PW" aria-label="password"
+					aria-describedby="password" name="password" id="passwords">
+			</div>
+			<div class="input-group mb-3">
+				<span class="input-group-text" id="name">Name</span>
+				<input type="text" class="form-control" placeholder="Name" aria-label="name" aria-describedby="name"
+					id="name" name="name">
+				<span class="input-group-text" id="phone">Phone</span>
+				<input type="text" class="form-control" placeholder="Phone" aria-label="phone" aria-describedby="phone"
+					id="phones" name="phone">
+			</div>
+			<div class="input-group mb-3">
+				<span class="input-group-text" id="address">Address</span>
+				<input type="text" class="form-control" placeholder="Address" aria-label="address"
+					aria-describedby="address" id="address" name="address">
+			</div>
+			<div class="input-group mb-3">
+				<span class="input-group-text" id="email">E-mail</span>
+				<input type="email" class="form-control" placeholder="example@email.com" aria-label="email"
+					aria-describedby="email" id="email" name="email">
+			</div>
+			<div class="input-group mb-3">
+				<span class="input-group-text" id="git-address">GithubAddress</span>
+				<input type="text" class="form-control" placeholder="https://github.com/example"
+					aria-label="git-address" aria-describedby="git-address" id="git-address" name="git-address">
+			</div>
+      <div class="input-group mb-3">
+        <div class="input-group-text">
+          <input type="radio" class="form-check-input mt-0" value="true" aria-label="gender" id="gender-male" name="gender" />
+        </div>
+        <label for="gender-male" class="form-control">Male</label>
+        <div class="input-group-text">
+          <input type="radio" class="form-check-input mt-0" value="2" aria-label="gender" id="gender-female" name="gender" />
+        </div>
+        <label for="gender-female" class="form-control">Female</label>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="birth">Birth Day</span>
+        <input 
+           type="date" 
+           class="form-control" 
+           aria-label="birth"
+           aria-describedby="birth" 
+           id="datePicker"
+           name="birth"
+           autocomplete="off" 
+        />
+     </div>
+			<button type="submit" class="btn btn-outline-secondary" style="width: 90px;">가입</button>
+			<a href="/" style="width: 85px;"><button type="button" class="btn btn-outline-danger">취소</button></a>
+		</form>
+<div class="modal fade" id="errorModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modalText">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script>
+      const myModal = new bootstrap.Modal(document.getElementById('errorModal'))
+      $(document).ready(function() {
+    
+        $("#registrationForm").submit(function(event) {
+          var userId = document.getElementById("userId").value;
+          console.log(userId);
+          if (!validateId(userId)) {
+            document.getElementById("modalTitle").innerHTML = "아이디 지정 오류";
+            document.getElementById("modalText").innerHTML= "ID는 3~20자 이어야 하며 영문자 또는 숫자만 포함해야 합니다.";
+            myModal.show();
+            event.preventDefault();
+            return;
+          }
+    
+          var password = document.getElementById("passwords").value;
+          console.log(password);
+          if (!validatePassword(password)) {
+            document.getElementById("modalTitle").innerHTML = "비밀번호 지정 오류";
+            document.getElementById("modalText").innerHTML= "비밀번호는 10~30자 이어야 하며 적어도 대문자, 소문자, 숫자, 특수문자(!@#$%^&)를 하나 이상 포함해야 합니다.";
+            myModal.show();
+            event.preventDefault();
+            return;
+          }
+    
+          var name = $("input[name='name']").val();
+          if (!validateName(name)) {
+            document.getElementById("modalTitle").innerHTML = "이름 지정 오류";
+            document.getElementById("modalText").innerHTML= "한글 이름은 2~10자이어야 하며 영문 이름은 4~20자이어야 합니다.";
+            myModal.show();
+            event.preventDefault();
+            return;
+          }
+    
+          var phone = document.getElementById("phones").value;
+          console.log(phone)
+          if (!validatePhone(phone)) {
+            document.getElementById("modalTitle").innerHTML = "전화번호 지정 오류";
+            document.getElementById("modalText").innerHTML= "전화번호는 '-'를 포함한 12자리 또는 13자리이거나 '-'를 제외한 10자리 또는 11자리이어야 합니다.";
+            myModal.show();
+            event.preventDefault();
+            return;
+          }
+    
+          var address = $("input[name='address']").val();
+          if (!validateAddress(address)) {
+            document.getElementById("modalTitle").innerHTML = "주소 지정 오류";
+            document.getElementById("modalText").innerHTML= "주소는 5~100자 이어야 합니다.";
+            myModal.show();
+            event.preventDefault();
+            return;
+          }
+    
+          var email = $("input[name='email']").val();
+          if (!validateEmail(email)) {
+            document.getElementById("modalTitle").innerHTML = "이메일 지정 오류";
+            document.getElementById("modalText").innerHTML= "유효하지 않은 이메일 주소입니다. com 또는 org 또는 co.kr 또는 net 으로 끝나야합니다.";
+            myModal.show();
+            event.preventDefault();
+            return;
+          }
+    
+          var gitAddress = document.getElementById("git-address").value;
+console.log(gitAddress);
+
+if (!validateGithubAddress(gitAddress)) {
+    document.getElementById("modalTitle").innerHTML = "깃허브 지정 오류";
+    document.getElementById("modalText").innerHTML = "잘못된 입력입니다.";
+    myModal.show();
+    event.preventDefault();
+    return;
+} else if (!gitAddress.startsWith('https://github.com/')) {
+    gitAddress = 'https://github.com/' + gitAddress;
+    document.getElementById("git-address").value = gitAddress;
+}
+
+console.log(gitAddress);
+
+$.ajax({
+    type: "POST",
+    url: "/user/regist",
+    data: $("#registrationForm").serialize(),
+    success: function(response) {
+        console.log(response);
+    },
+    error: function(error) {
+        console.error(error);
+    }
+});
+    
+        $("#datePicker").datepicker({
+          format: "yyyy-mm-dd",
+          endDate: "1d",
+          autoclose: true,
+          clearBtn: true,
+          title: "Birth day",
+          language: "ko",
+        });
+      });
+    
+      function validateId(id) {
+        return /^[a-zA-Z0-9]{3,20}$/.test(id);
+      }
+    
+      function validatePassword(password) {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&]).{10,30}$/.test(password);
+      }
+    
+      function validateName(name) {
+        return /^[\uAC00-\uD7A3]{2,10}$|^[\sa-zA-Z]{4,20}$/.test(name);
+      }
+    
+      function validatePhone(phone) {
+        return /^(?:\d{3}-\d{3}-\d{4}|\d{3}-\d{4}-\d{4}|\d{10}|\d{3}\d{4}\d{4})$/.test(phone);
+      }
+    
+      function validateAddress(address) {
+        return /^.{5,100}$/.test(address);
+      }
+    
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.(co\.kr|com|org|net)$/.test(email);
+      }
+    
+      function validateGithubAddress(gitAddress) {
+    return /^(https:\/\/github.com\/)?[a-zA-Z0-9]+$/.test(gitAddress);
+}
+    </script>
+	</div>
+
+</body>
+
+</html>

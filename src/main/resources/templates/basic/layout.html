@@ -12,7 +12,7 @@
   </head>
   <body>
     <div id="root">
-      <div id="header" th:replace="~{/basic/header :: headerFragment}"></div>
+      <div id="header" th:replace="~{/basic/header :: headerFragment(loginError=${loginError})}"></div>
       <div id="menu"></div>
       <div id="content" th:insert="~{${path} :: ${content}}"></div>
     </div>

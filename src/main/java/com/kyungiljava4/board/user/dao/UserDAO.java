@@ -34,13 +34,13 @@ public class UserDAO {
 				user.getEmail(), user.getGitAddress(), genderValue, user.getBirth());
 	}
 
-	  public User get(int id) {
-	        return jdbcTemplate.queryForObject("select * from users where \"id\"=?", new Object[]{id}, mapper);
-	    }
-
-    public User get(String userId) {
-        return jdbcTemplate.queryForObject("select * from users where \"user_id\"=?", new Object[]{userId}, mapper);
-    }
+	public User get(int id) {
+		return jdbcTemplate.queryForObject("select * from users where \"id\"=?", mapper, id);
+	}
+	
+	public User get(String userId) {
+		return jdbcTemplate.queryForObject("select * from users where \"user_id\"=?", mapper, userId);
+	}
 
 	public List<User> getAll() {
 		return jdbcTemplate.query("select * from users order by \"id\"", mapper);

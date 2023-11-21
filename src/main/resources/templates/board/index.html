@@ -4,13 +4,6 @@
 </head>
 <body>
     <div th:fragment="boardFragment" class="board container">
-        <!-- <form th:action="@{/board/create}" method="post">
-            <label for="title">제목:</label>
-            <input type="text" id="title" name="title" required/><br/>
-            <label for="content"> 내용:</label>
-            <textarea id="content" name="content" required></textarea><br/>
-            <button type="submit">글 작성</button>
-        </form>   -->
         <form action="/add" method="post">
             <!-- <input type="text" name="title" /> -->
             <div class="form-floating mb-3">
@@ -22,8 +15,7 @@
                 <label for="floatingTextarea">내용</label>
               </div>
             <button class="btn btn-primary">작성</button>
-            <a href="/regist"><button type="button" class="btn btn-outline-secondary">회원가입</button></a>
-
+           
         </form>
         <br/>
         <h2>게시판 목록
@@ -47,19 +39,6 @@
               </tr>
             </tbody>
           </table>
-       
-        <!-- <ul>
-            <li th:each="board : ${boards}" th:object="${board}">
-               작성자 : <span th:text="${board.title}"></span> - 내용 : <span th:text="${board.content}"></span>
-            </li>
-            <li th:each="board:${boards}" th:object="${board}">
-                <h1 th:text="*{title}"></h1>
-                <p th:text="*{userId}"></p>
-            </li>
-        </ul> -->
     </div>
-    <!-- <div th:fragment="boardFragment" class="board">
-        오늘의 숙제~<br />dao, service 추가해서 게시판 글작성, 목록 보기 만들기 <br /> UI는 간단하게 여기서 작성해서 완성하기
-    </div> -->
 </body>
 </html>

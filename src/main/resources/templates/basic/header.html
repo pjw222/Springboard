@@ -3,9 +3,12 @@
     <link rel="stylesheet" href="/styles/header.css" />
 </head>
 <body>
-    <div th:fragment="headerFragment" id="header">
+    <div th:fragment="headerFragment" id="header" class="d-flex justify-content-between align-items-crenter px-2 mt-3">
+        <a href="/"><button class="btn btn-secondary btn-sm">home</button></a>
         <h1 th:text="${title}"></h1>
-        <div th:if="${session.userId != null}">
+        <div th:replace="/user/loginBox :: loginFragment"></div>
+    </div>
+        <!-- <div th:if="${session.userId != null}">
             <span th:text="${session.userName}" class="btn btn-secondary"></span>
             <form th:action="@{/logout}" method="post">
                 <button type="submit" class="btn btn-secondary">로그아웃</button>
@@ -16,6 +19,9 @@
                 로그인
             </button>
             <a href="/regist">
+                <button type="button" class="btn btn-outline-secondary">회원가입</button>
+            </a>
+            <a href="/user/regist">
                 <button type="button" class="btn btn-outline-secondary">회원가입</button>
             </a>
         </div>
@@ -54,7 +60,7 @@
                 </form>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </body>
 </html>

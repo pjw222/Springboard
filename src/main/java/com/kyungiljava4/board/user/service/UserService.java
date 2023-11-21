@@ -18,6 +18,7 @@ public class UserService {
 		userDAO.regist(user);
 		System.out.println(user);
 	}
+	
 	public int getUserById(int userId) {
 	    User user = userDAO.get(userId);
 	    return user.getId();
@@ -27,9 +28,9 @@ public class UserService {
 		return userDAO.getAll();
 	}
 	public User login(User user) {
-		User tempAdmin = userDAO.get(user.getUserId());
-		if (tempAdmin != null && tempAdmin.getPassword().equals(cryptoPassword(user.getPassword()))) {
-			return tempAdmin;
+		User tempUser = userDAO.get(user.getUserId());
+		if (tempUser != null && tempUser.getPassword().equals(cryptoPassword(user.getPassword()))) {
+			return tempUser;
 		} else
 			return null;
 	}
