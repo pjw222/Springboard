@@ -42,6 +42,7 @@ public class UserDAO {
 		return jdbcTemplate.queryForObject("select * from users where \"user_id\"=?", mapper, userId);
 	}
 
+
 	public List<User> getAll() {
 		return jdbcTemplate.query("select * from users order by \"id\"", mapper);
 	}

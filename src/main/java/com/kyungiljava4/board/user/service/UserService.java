@@ -18,8 +18,7 @@ public class UserService {
 		userDAO.regist(user);
 		System.out.println(user);
 	}
-	
-	public int getUserById(int userId) {
+	public int getUserNameById(int userId) {
 	    User user = userDAO.get(userId);
 	    return user.getId();
 	}

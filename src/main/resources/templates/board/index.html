@@ -4,20 +4,7 @@
 </head>
 <body>
     <div th:fragment="boardFragment" class="board container">
-        <form action="/add" method="post">
-            <!-- <input type="text" name="title" /> -->
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" name="title" id="floatingInput" placeholder="제목">
-                <label for="floatingInput">제목</label>
-            </div>           
-            <div class="form-floating mb-3">
-                <textarea class="form-control" name="content" placeholder="내용" id="floatingTextarea"></textarea>
-                <label for="floatingTextarea">내용</label>
-              </div>
-            <button class="btn btn-primary">작성</button>
-           
-        </form>
-        <br/>
+      <div id="add" th:replace="~{/board/add :: addFragment}"></div>
         <h2>게시판 목록
             <small class="text-muted" th:text="${#lists.size(boards)} + '개의 게시물'"></small>
         </h2>
@@ -31,12 +18,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr th:each="board:${boards}" th:object="${board}">
-                <th scope="row" th:text="*{id}"></th>
+              <tr th:each="board, iterStat : ${boards}" th:object="${board}">
+                <th scope="row" th:text="${iterStat.count}"></th>
                 <td th:text="*{title}">Mark</td>
-                <td th:text="*{userId}">Otto</td>
+                <td th:text="${userList[iterStat.index]}"></td>
                 <td th:text="*{createdAt}">@mdo</td>
-              </tr>
+            </tr>
             </tbody>
           </table>
     </div>

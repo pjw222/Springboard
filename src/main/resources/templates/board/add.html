@@ -1,0 +1,21 @@
+<html lang="ko" mxlns:th="http:/www.thymeleaf.org">
+    <head th:fragment="addFragmentHead">
+        <link rel="stylesheet" href="/styles/index.css" />
+    </head>
+    <body>
+        <div th:if="${session.user != null}" th:fragment="addFragment" class="board container">
+            <form action="/add" method="post" id="addBoard">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="title" id="floatingInput" placeholder="제목" />
+                    <label for="floatingInput">제목</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" name="content" placeholder="내용" id="floatingTextarea"></textarea>
+                    <label for="floatingTextarea">내용</label>
+                </div>
+                <button type="submit" class="btn btn-primary">작성</button>
+            </form>
+        </div>
+        <div th:if="${session.user == null}"></div>
+    </body>
+</html>

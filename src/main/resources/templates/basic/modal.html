@@ -1,0 +1,16 @@
+<html lang="ko" mxlns:th="http://www.thymeleaf.org">
+  <head th:fragment="modalFragmentHead">
+    <link rel="stylesheet" href="/styles/modal.css" />
+  </head>
+  <body>
+    <div th:fragment="modalFragment" id="modal-container">
+      <div id="modal-box">
+        <p id="modal-msg"></p>
+        <button class="btn btn-danger m-auto d-block" id="modal-btn">
+          확인
+        </button>
+      </div>
+      <script src="/scripts/modal.js"></script>
+    </div>
+  </body>
+</html>

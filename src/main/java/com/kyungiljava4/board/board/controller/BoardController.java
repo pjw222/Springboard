@@ -23,12 +23,14 @@ public class BoardController {
 	@GetMapping("/")
 	public String boardMainPage(Model model) {
 		List<Board> boards = boardService.getAll();
+		List<String> user = boardService.matchUserId();
 		model.addAttribute("boards", boards);
+		model.addAttribute("userList",user);
 		model.addAttribute("title", "게시판");
 		model.addAttribute("path", "/board/index");
 		model.addAttribute("content", "boardFragment");
 		model.addAttribute("contentHead", "boardFragmentHead");
-
+		
 		return "/basic/layout";
 	}
 	@GetMapping("/notice")
@@ -43,11 +45,12 @@ public class BoardController {
 	}
 
 	@PostMapping("/add")
-	public String boardAdd(@RequestParam Map<String, String> data, HttpSession session) {
-		
+	public String boardAdd(@RequestParam Map<String, String> data, HttpSession session,Model model) {
+		try {
 		int userId = (Integer)session.getAttribute("user"); 
 
 		if(userId == 0) {
+			model.addAttribute("msg","로그인을 안해서 작성못해요");
 			return "redirect:/";
 		}
 		
@@ -55,9 +58,12 @@ public class BoardController {
 		
 		
 		return "redirect:/";
-		
+			
+		}catch(Exception e) {
+			return "redirect:/";
+		}	
 	}
-	
+
 
 //	@GetMapping("/")
 //	public String boardMainPage(Model model) {
