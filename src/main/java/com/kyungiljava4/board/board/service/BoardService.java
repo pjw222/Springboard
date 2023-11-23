@@ -24,23 +24,43 @@ public class BoardService {
 	public void add(Board board) {
 		boardDAO.add(board);
 	}
+	public Board get(int id) {
+		Board board = boardDAO.get(id);
+		return board;
+	}
+    public List<Board> getBoardsByPage(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        return boardDAO.getBoardsByPage(offset, pageSize);
+    }
+
+    public int getTotalBoards() {
+        return boardDAO.getTotalBoards();
+    }
 
 	public List<Board> getAll() {
 		List<Board> board = boardDAO.getAll();
 		return board;
 	}
-	public List<String> matchUserId() {
-	    List<Board> list = boardDAO.getAll();
-	    List<String> userList = new ArrayList<>(list.size());
-
-	    for (Board board : list) {
-	        User user = userDAO.get(board.getUserId());
-	        if (user != null) {
-	            userList.add(user.getName());
-	        }
-	    }
-	    return userList;
+	public void updateBoard(String title, String content, int id) {
+		boardDAO.update(title,content,id);
 	}
+	public void delete(int id) {
+		boardDAO.delete(id);
+	}
+
+
+//	public List<String> matchUserId() {
+//	    List<Board> list = boardDAO.getAll();
+//	    List<String> userList = new ArrayList<>(list.size());
+//
+//	    for (Board board : list) {
+//	        User user = userDAO.get(board.getUserId());
+//	        if (user != null) {
+//	            userList.add(user.getName());
+//	        }
+//	    }
+//	    return userList;
+//	}
 }
 /*
  * 

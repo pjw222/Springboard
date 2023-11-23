@@ -16,11 +16,13 @@ public class BoardDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	private RowMapper<Board> mapper = new RowMapper<Board>() {
+
 		@Override
 		public Board mapRow(ResultSet rs, int rowNum) throws SQLException {
 			// TODO Auto-generated method stub
 			return new Board(rs.getInt("id"), rs.getString("title"), rs.getString("content"), rs.getInt("views"), 0, 0,
-					rs.getTimestamp("created_at"), rs.getInt("is_withdrew") == 0, rs.getInt("user_id"));
+					rs.getTimestamp("created_at"), rs.getInt("is_withdrew") == 1, rs.getInt("user_id"),
+					rs.getString("name"));
 		}
 	};
 
@@ -35,15 +37,32 @@ public class BoardDAO {
 	}
 
 	public Board get(int id) {
-		return jdbcTemplate.queryForObject("SELECT * FROM boards WHERE \"id\" = ?", mapper);
+		return jdbcTemplate.queryForObject(
+				"select a.*, b.\"name\" from boards a join users b on a.\"user_id\" = b.\"id\" where a.\"id\" = ?",
+				mapper, id);
 	}
 
 	public List<Board> getAll() {
-		return jdbcTemplate.query("select * from boards order by \"id\"", mapper);
+		return jdbcTemplate.query(
+				"select boards.*, users.\"name\" from boards join users on boards.\"user_id\"=users.\"id\" order by boards.\"id\" offset 0 rows fetch first 5 rows only",
+				mapper);
 	}
 
-	public int getTotalBoardCount() {
+	public List<Board> getBoardsByPage(int offset, int pageSize) {
+		String sql = "select boards.*, users.\"name\" from boards join users on boards.\"user_id\"=users.\"id\" order by boards.\"id\" offset ? rows fetch first ? rows only";
+		return jdbcTemplate.query(sql, mapper, offset, pageSize);
+	}
+
+	public int getTotalBoards() {
 		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM boards", Integer.class);
+	}
+	
+	public void update(String title, String content, int id) {
+		jdbcTemplate.update("update boards set \"title\"=?, \"content\"=? where \"id\"=?", title, content, id);
+	}
+
+	public void delete(int id) {
+		jdbcTemplate.update("delete from boards where \"id\" = ?", id);
 	}
 }
 /*

@@ -27,4 +27,5 @@ public class Board {
     private boolean isWithdrawn = false;
     @NonNull
     private int userId;
+    private String userName;
 }
