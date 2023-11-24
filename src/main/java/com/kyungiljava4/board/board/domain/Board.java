@@ -1,9 +1,6 @@
 package com.kyungiljava4.board.board.domain;
 
 import java.sql.Timestamp;
-
-import com.kyungiljava4.board.user.domain.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,4 +25,5 @@ public class Board {
     @NonNull
     private int userId;
     private String userName;
+    private String userGitAddress;
 }

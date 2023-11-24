@@ -1,49 +1,63 @@
-
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="boardFragmentHead">
-    <link rel="stylesheet" href="/styles/index.css" />
-</head>
-<body>
-    <div th:fragment="boardFragment" class="board container">
-        <div id="add" th:replace="~{/board/add :: addFragment}"></div>
-        <h2>
-            게시판 목록
-            <small class="text-muted" th:text="${#lists.size(boards)} + '개의 게시물'"></small>
-        </h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">작성자</th>
-                    <th scope="col">작성일자</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="board, iterStat : ${boards}" th:object="${board}">
-                    <th scope="row" th:text="${iterStat.count}"></th>
-                    <td>
-                      <a th:href="@{'/detail/' + *{id}}" th:text="*{title}"></a>
-                  </td>
-                    <td th:text="*{userName}"></td>
-                    <td th:text="*{createdAt}"></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="pagination">
-            <ul>
-                <li th:if="*{currentPage > 1}">
-                  <a th:href="@{'/?page=' + *{currentPage - 1}}">이전</a>
-                </li>
-                <li th:each="pageNumber : *{#numbers.sequence(1, totalPages)}" 
-                    th:classappend="${pageNumber == currentPage} ? 'active' : ''">
-                    <a th:href="@{'?page=' + *{pageNumber}}" th:text="${pageNumber}"></a>
-                </li>
-                <li th:if="*{currentPage < totalPages}">
-                  <a th:href="@{'/?page=' + *{currentPage + 1}}">다음</a>
-                </li>
-            </ul>
+    <head th:fragment="boardFragmentHead">
+        <link rel="stylesheet" href="/styles/index.css" />
+        <link rel="stylesheet" href="/styles/board/index.css" />
+        <head th:replace="~{/basic/userinfo :: userInfoFragmentHead}"></head>
+    </head>
+    <body>
+        <div th:fragment="boardFragment" class="board container">
+            <div id="add" th:replace="~{/board/add :: addFragment}"></div>
+            <h2>
+                게시판 목록
+                <small class="text-muted" th:text="${#lists.size(boards)} + '개의 게시물'"></small>
+            </h2>
+            <table class="table" style="width: 1000px; height: 270px">
+                <thead>
+                    <tr>
+                        <hr/>
+                        <th scope="col">#</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">작성자</th>
+                        <th scope="col">작성일자</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="board, iterStat : ${boards}" th:object="${board}">
+                        <!-- <th scope="row" th:text="${iterStat.count}"></th> -->
+                        <th scope="row" th:text="*{id}"></th>
+                        <td>
+                            <a th:href="@{'/detail/' + *{id}}" th:text="*{title}"></a>
+                        </td>   
+                        <td>
+                            <div th:replace="~{/basic/userinfo :: userInfoFragment}"></div>
+                        </td>
+                        <td th:text="*{createdAt}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item" th:if="*{currentPage > 1}">
+                            <a class="page-link" th:href="@{'/?page=' + *{currentPage - 1}}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li
+                            class="page-item"
+                            th:each="pageNumber : *{#numbers.sequence(1, totalPages)}"
+                            th:classappend="${pageNumber == currentPage} ? 'active' : ''"
+                        >
+                            <a class="page-link" th:href="@{'?page=' + *{pageNumber}}" th:text="${pageNumber}">1</a>
+                        </li>
+                        <li class="page-item" th:if="*{currentPage < totalPages}">
+                            <a class="page-link" th:href="@{'/?page=' + *{currentPage + 1}}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>

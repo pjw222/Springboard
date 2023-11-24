@@ -47,6 +47,15 @@ public class BoardService {
 	public void delete(int id) {
 		boardDAO.delete(id);
 	}
+	
+	public int getPageCount() {
+// 	한 페이지에서 목록을 몇개 출력 할 것인가? 5
+//	글 1 개 => 페이지 1 / 5
+//	글 10 => 페이지 ?-> 2 / 5
+//	글 11 => 페이지 3 / 5
+//  글 15 => 페이지 3 / 5 + 1 (글 % 5 == 0 - 1)		
+		return (boardDAO.getCount() - 1) / 5 + 1 ;
+	}
 
 
 //	public List<String> matchUserId() {

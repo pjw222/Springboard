@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="detailFragmentHead">
+        <link rel="stylesheet" href="/styles/index.css" />
+        <link rel="stylesheet" href="/styles/board/index.css" />
+        <link rel="stylesheet" href="/styles/board/detail.css" />
+        <head th:replace="~{/basic/userinfo :: userInfoFragmentHead}"></head>
+    </head>
+    <body>
+        <div th:fragment="detailFragment" class="board container" th:object="${boards}" >
+            <div class="d-flex justify-content-between align-items-center">
+                <div th:text="'제목 : '+*{title}"></div>
+                <h3><div th:replace="~{/basic/userInfo :: userInfoFragment}"></div></h3>
+                <div th:text="*{createdAt}"></div>
+              </div>
+              <hr />
+              <p th:utext="*{content}"></p> 
+              <hr />     
+            <div th:if="${userId}==${boardId}">
+                <a th:href="@{'/edit/' + *{id}}"><button type="button" id="edit">수정</button></a>
+                <form th:action="@{'/delete/' + *{id}}" method="post">
+                    <button type="submit" id="delete">삭제</button>
+                </form>
+                <!-- <div th:text="${userId}==${boardId}"></div> -->
+            </div>
+        </div>
+    </body>
+</html>

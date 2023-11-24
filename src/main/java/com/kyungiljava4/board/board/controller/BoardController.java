@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kyungiljava4.board.board.domain.Board;
 import com.kyungiljava4.board.board.service.BoardService;
+import com.kyungiljava4.board.reply.domain.Reply;
+import com.kyungiljava4.board.reply.service.ReplyService;
+import com.kyungiljava4.board.user.domain.User;
+import com.kyungiljava4.board.user.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -20,95 +24,87 @@ import jakarta.servlet.http.HttpSession;
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private ReplyService replyService;
 
 	@GetMapping("/")
 	public String boardMainPage(Model model, @RequestParam(defaultValue = "1") int page,
-	                            @RequestParam(defaultValue = "5") int pageSize) {
+			@RequestParam(defaultValue = "5") int pageSize) {
 
-	    List<Board> pagedBoards = boardService.getBoardsByPage(page, pageSize);
+		List<Board> pagedBoards = boardService.getBoardsByPage(page, pageSize);
 
-	    int totalBoards = boardService.getTotalBoards();
-	    int totalPages = (int) Math.ceil((double) totalBoards / pageSize);
+		int totalBoards = boardService.getTotalBoards();
+		int totalPages = (int) Math.ceil((double) totalBoards / pageSize);
 
-	    model.addAttribute("title", "게시판");
-	    model.addAttribute("path", "/board/index");
-	    model.addAttribute("content", "boardFragment");
-	    model.addAttribute("contentHead", "boardFragmentHead");
-	    model.addAttribute("boards", pagedBoards);
-	    model.addAttribute("currentPage", page);
-	    model.addAttribute("totalPages", totalPages);
+		model.addAttribute("title", "게시판");
+		model.addAttribute("path", "/board/index");
+		model.addAttribute("content", "boardFragment");
+		model.addAttribute("contentHead", "boardFragmentHead");
+		model.addAttribute("boards", pagedBoards);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
 
-	    return "/basic/layout";
+		return "/basic/layout";
 	}
-    @GetMapping("/detail/{id}")
-    public String showBoardDetail(@PathVariable int id, Model model) {
-        Board board = boardService.get(id);
-        model.addAttribute("title", "상세보기");
+
+	@GetMapping("/detail/{boardId}")
+	public String showBoardDetail(@PathVariable("boardId") int boardId, Model model, HttpSession session) {
+	    Board board = boardService.get(boardId);
+
+	    Integer userId = (Integer) session.getAttribute("user");
+	    
+	    model.addAttribute("title", "상세보기");
 	    model.addAttribute("path", "/board/detail");
 	    model.addAttribute("content", "detailFragment");
 	    model.addAttribute("contentHead", "detailFragmentHead");
-        model.addAttribute("boards", board);
-        return "/basic/layout";
-    }
-    @GetMapping("/delete/{id}")
-    public String showBoardDelete(@PathVariable int id, Model model) {
-        Board board = boardService.get(id);
-        model.addAttribute("title", "삭제하기");
-        model.addAttribute("path", "/board/delete");
-        model.addAttribute("content", "deleteFragment");
-        model.addAttribute("contentHead", "deleteFragmentHead");
-        model.addAttribute("board", board);
-        return "/basic/layout";
-    }
-    @PostMapping("/delete/{id}")
-    public String delete(@PathVariable int id, Model model) {
-        boardService.delete(id);
-        return "redirect:/";
-    }
+	    board.setContent(board.getContent().replace("\n", "<br />"));
+	    model.addAttribute("boards", board);
 
-	
-    @GetMapping("/edit/{id}")
-    public String showBoardEdit(@PathVariable int id, Model model) {
-        Board board = boardService.get(id);
+	    model.addAttribute("userId", userId != null ? userId : 0);
+
+	    return "/basic/layout";
+	}
+
+
+	@GetMapping("/delete/{id}")
+	public String showBoardDelete(@PathVariable int id, Model model) {
+		Board board = boardService.get(id);
+		model.addAttribute("title", "삭제하기");
+		model.addAttribute("path", "/board/delete");
+		model.addAttribute("content", "deleteFragment");
+		model.addAttribute("contentHead", "deleteFragmentHead");
+		model.addAttribute("board", board);
+		return "/basic/layout";
+	}
+
+	@PostMapping("/delete/{id}")
+	public String delete(@PathVariable int id, Model model) {
+		boardService.delete(id);
+		return "redirect:/";
+	}
+
+	@GetMapping("/edit/{id}")
+	public String showBoardEdit(@PathVariable int id, Model model) {
+		Board board = boardService.get(id);
 		model.addAttribute("title", "수정하기");
-		model.addAttribute("path", "/board/edit"); 
-		model.addAttribute("content", "editFragment"); 
+		model.addAttribute("path", "/board/edit");
+		model.addAttribute("content", "editFragment");
 		model.addAttribute("contentHead", "editFragmentHead");
 		model.addAttribute("boards", board);
 		return "/basic/layout";
 	}
-	
+
 	@PostMapping("/edit/{id}")
-	public String edit(@RequestParam Map<String, String> data,@PathVariable int id, Model model) {
+	public String edit(@RequestParam Map<String, String> data, @PathVariable int id, Model model) {
 		String title = data.get("title");
 		String content = data.get("content");
 		int editId = Integer.parseInt(data.get("editId"));
-		boardService.updateBoard(title, content, editId);		
-		return "redirect:/detail/"+editId;
+		boardService.updateBoard(title, content, editId);
+		return "redirect:/detail/" + editId;
 	}
 
-//	@GetMapping("/")
-//	public String boardMainPage(Model model) {
-//		model.addAttribute("title", "게시판");
-//		model.addAttribute("path", "/board/index");
-//		model.addAttribute("content", "boardFragment");
-//		model.addAttribute("contentHead", "boardFragmentHead");
-//		model.addAttribute("boards", boardService.getAll());
-//		return "/basic/layout";
-//	}
-//	@GetMapping("/")
-//	public String boardMainPage(Model model) {
-//		List<Board> boards = boardService.getAll();
-////		List<String> user = boardService.matchUserId();
-//		model.addAttribute("boards", boards);
-////		model.addAttribute("userList",user);
-//		model.addAttribute("title", "게시판");
-//		model.addAttribute("path", "/board/index");
-//		model.addAttribute("content", "boardFragment");
-//		model.addAttribute("contentHead", "boardFragmentHead");
-//		
-//		return "/basic/layout";
-//	}
 	@GetMapping("/notice")
 	public String noticePage(Model model) {
 		List<Board> boards = boardService.getAll();
@@ -138,7 +134,14 @@ public class BoardController {
 			return "redirect:/";
 		}
 	}
-
+    @PostMapping("/addReply")
+    public String addReply(@RequestParam Map<String, String> data, Model model, HttpSession session) {
+    	int userId = (Integer) session.getAttribute("user");
+    	int boardId = Integer.parseInt(data.get("boardId")); 
+    	Reply newReply = new Reply(data.get("comment"),3,boardId,userId);
+        replyService.addReply(newReply);
+        return "redirect:/detail/" + data.get("boardId");
+    }
 //	@GetMapping("/")
 //	public String boardMainPage(Model model) {
 //	    List<Board> boards = boardService.getAll();
@@ -166,5 +169,28 @@ public class BoardController {
 //		Board board = new Board(title, content);
 //		boardService.add(board);
 //		return "redirect:/";
+//	}
+
+//	@GetMapping("/")
+//	public String boardMainPage(Model model) {
+//		model.addAttribute("title", "게시판");
+//		model.addAttribute("path", "/board/index");
+//		model.addAttribute("content", "boardFragment");
+//		model.addAttribute("contentHead", "boardFragmentHead");
+//		model.addAttribute("boards", boardService.getAll());
+//		return "/basic/layout";
+//	}
+//	@GetMapping("/")
+//	public String boardMainPage(Model model) {
+//		List<Board> boards = boardService.getAll();
+////		List<String> user = boardService.matchUserId();
+//		model.addAttribute("boards", boards);
+////		model.addAttribute("userList",user);
+//		model.addAttribute("title", "게시판");
+//		model.addAttribute("path", "/board/index");
+//		model.addAttribute("content", "boardFragment");
+//		model.addAttribute("contentHead", "boardFragmentHead");
+//		
+//		return "/basic/layout";
 //	}
 }

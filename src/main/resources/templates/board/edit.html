@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="editFragmentHead">
+    <link rel="stylesheet" href="/styles/index.css" />
+</head>
+<body>
+    <div th:fragment="editFragment" class="board container">
+        <form th:action="@{'/edit/' + *{id}}" method="post">
+            <input type="hidden" name="editId" th:value="${boards.id}" />
+            
+            <label for="title">제목:</label>
+            <input type="text" id="title" name="title" th:value="${boards.title}" required />
+            
+            <label for="content">내용:</label>
+            <textarea id="content" name="content" required th:text="${boards.content}"></textarea>
+            
+            <button type="submit">수정 완료</button>
+        </form>
+        
+        <form th:action="@{'/delete/' + *{id}}" method="post">
+            <button type="submit" id="delete">삭제</button>
+        </form>
+    </div>
+</body>
+</html>
