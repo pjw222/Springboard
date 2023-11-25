@@ -16,7 +16,7 @@ public class Reply {
 	@NonNull
 	private String content;
 	private Timestamp createdAt;
-	private int replyId;
+	private Integer replyId;
 	private int userId;
 	private int boardId;
 	private String userName;

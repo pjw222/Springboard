@@ -1,0 +1,16 @@
+<html lang="ko" mxlns:th="http:/www.thymeleaf.org">
+    <head th:fragment="addReplyFragmentHead">
+        <link rel="stylesheet" href="/styles/index.css" />
+    </head>
+    <body>
+        <div th:if="${session.user != null}" th:fragment="addReplyFragment" class="board container">
+                <form action="/addReply" method="post">
+                    <input type="text" name="comment" placeholder="댓글 또는 대댓글 입력" />
+                    <input type="hidden" name="boardId" th:value="${boardId}" />
+                    <input type="hidden" name="parentReplyId" th:value="${parentReplyId}" />
+                    <button type="submit" class="btn btn-primary">작성</button>
+                </form>
+        </div>
+        <div th:if="${session.user == null}"></div>
+    </body>
+</html>

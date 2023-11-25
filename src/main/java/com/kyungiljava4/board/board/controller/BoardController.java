@@ -51,22 +51,21 @@ public class BoardController {
 
 	@GetMapping("/detail/{boardId}")
 	public String showBoardDetail(@PathVariable("boardId") int boardId, Model model, HttpSession session) {
-	    Board board = boardService.get(boardId);
+		Board board = boardService.get(boardId);
 
-	    Integer userId = (Integer) session.getAttribute("user");
-	    
-	    model.addAttribute("title", "상세보기");
-	    model.addAttribute("path", "/board/detail");
-	    model.addAttribute("content", "detailFragment");
-	    model.addAttribute("contentHead", "detailFragmentHead");
-	    board.setContent(board.getContent().replace("\n", "<br />"));
-	    model.addAttribute("boards", board);
+		Integer userId = (Integer) session.getAttribute("user");
 
-	    model.addAttribute("userId", userId != null ? userId : 0);
+		model.addAttribute("title", "상세보기");
+		model.addAttribute("path", "/board/detail");
+		model.addAttribute("content", "detailFragment");
+		model.addAttribute("contentHead", "detailFragmentHead");
+		board.setContent(board.getContent().replace("\n", "<br />"));
+		model.addAttribute("boards", board);
 
-	    return "/basic/layout";
+		model.addAttribute("userId", userId != null ? userId : 0);
+
+		return "/basic/layout";
 	}
-
 
 	@GetMapping("/delete/{id}")
 	public String showBoardDelete(@PathVariable int id, Model model) {
@@ -134,14 +133,31 @@ public class BoardController {
 			return "redirect:/";
 		}
 	}
-    @PostMapping("/addReply")
-    public String addReply(@RequestParam Map<String, String> data, Model model, HttpSession session) {
-    	int userId = (Integer) session.getAttribute("user");
-    	int boardId = Integer.parseInt(data.get("boardId")); 
-    	Reply newReply = new Reply(data.get("comment"),3,boardId,userId);
-        replyService.addReply(newReply);
-        return "redirect:/detail/" + data.get("boardId");
-    }
+
+	@PostMapping("/addReply")
+	public String addReply(@RequestParam Map<String, String> data, Model model, HttpSession session) {
+		int userId = (Integer) session.getAttribute("user");
+		int boardId = Integer.parseInt(data.get("boardId"));
+		String comment = data.get("comment");
+		Integer parentReplyId;
+		String parentReplyIdString = data.get("parentReplyId");
+		if (parentReplyIdString == null || parentReplyIdString.isEmpty()) {
+			parentReplyId = null;
+		} else {
+			parentReplyId = Integer.parseInt(parentReplyIdString);
+		}
+
+		Reply reply = new Reply();
+		reply.setBoardId(boardId);
+		reply.setUserId(userId);
+		reply.setContent(comment);
+		reply.setReplyId(parentReplyId);
+
+		replyService.addReply(reply);
+
+		return "redirect:/detail/" + boardId;
+	}
+
 //	@GetMapping("/")
 //	public String boardMainPage(Model model) {
 //	    List<Board> boards = boardService.getAll();
