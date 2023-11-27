@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="/styles/board/detail.css" />
         <head th:replace="~{/basic/userinfo :: userInfoFragmentHead}"></head>
         <head th:replace="~{/board/addReply :: addReplyFragmentHead}"></head>
+        <head th:replace="~{/board/comment :: commentFragmentHead}"></head>
     </head>
     <body>
         <div th:fragment="detailFragment" class="board container" th:object="${boards}" >
@@ -23,7 +24,9 @@
                     <button type="submit" id="delete">삭제</button>
                 </form>
             </div>
-            <div th:replace="~{/board/addReply :: addReplyFragment}"></div>           
+                <hr />
+            <div th:replace="~{/board/comment :: commentFragment}"></div>  
+            <!-- <div th:replace="~{/board/addReply :: addReplyFragment}"></div>            -->
         </div>
     </body>
 </html>

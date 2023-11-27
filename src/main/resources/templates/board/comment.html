@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="commentFragmentHead">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <div th:fragment="commentFragment" class="board container">
+            <form action="/comments/add" method="post" th:if="${session.user} != null">
+                <input type="text" name="content" placeholder="Comment" />
+                <input type="hidden" name="user_id" th:value="${session.user}">
+                <input type="hidden" name="board_id" th:value="*{id}">
+                <button>댓글 추가</button>
+            </form>
+            <hr />
+            <!-- <form action="/comments/addReply" method="post" th:if="${session.user} != null">
+                <input type="text" name="content" placeholder="대댓글 추가" />
+                <input type="hidden" name="user_id" th:value="${session.user}">
+                <input type="hidden" name="board_id" th:value="*{id}">
+                <input type="hidden" name="parent_comment_id" value="*{commentId}">
+                <button>대댓글 추가</button>
+            </form> -->
+            
+            <ul id="comment-list" th:data-board-id="*{id}">
+            </ul>
+            <form action="/comments/add" id="replyForm" style="display: none;">
+                <input type="text" name="content" placeholder="대댓글 추가" />
+                <input type="hidden" name="user_id" th:value="${session.user}">
+                <input type="hidden" name="board_id" th:value="*{id}">
+                <input type="hidden" name="parent_comment_id" id="parentCommentId" value="*{commentId}">
+                <button type="button" onclick="addReply()">대댓글 추가</button>
+            </form>
+            <script src="/scripts/board/comment.js"></script>
+        </div>        
+    </body>
+</html>
