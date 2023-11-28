@@ -1,0 +1,25 @@
+#comment-list form {
+    display: none;
+  }
+  
+  #comment-list form.on {
+    display: block;
+  }
+  
+  .comment-list {
+    padding-left: 1rem;
+  }
+  
+  .comment-item {
+    padding-left: 0.1rem;
+    /* border-left: 2px solid black; */
+  }
+  
+  .recomment-img {
+    width: 1rem;
+    margin-right: 1rem;
+  }
+  
+  .comment-user-name {
+    font-weight: 900;
+  }

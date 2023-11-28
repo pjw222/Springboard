@@ -2,34 +2,28 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
     <head th:fragment="commentFragmentHead">
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="/styles/board/comment.css">
     </head>
     <body>
         <div th:fragment="commentFragment" class="board container">
-            <form action="/comments/add" method="post" th:if="${session.user} != null">
+            <form action="/comments/add" method="post" th:if="${session.user} != null" id="board-comment">
                 <input type="text" name="content" placeholder="Comment" />
                 <input type="hidden" name="user_id" th:value="${session.user}">
                 <input type="hidden" name="board_id" th:value="*{id}">
-                <button>댓글 추가</button>
+                <button class="btn btn-outline-secondary">댓글 추가</button>
             </form>
-            <hr />
-            <!-- <form action="/comments/addReply" method="post" th:if="${session.user} != null">
-                <input type="text" name="content" placeholder="대댓글 추가" />
-                <input type="hidden" name="user_id" th:value="${session.user}">
-                <input type="hidden" name="board_id" th:value="*{id}">
-                <input type="hidden" name="parent_comment_id" value="*{commentId}">
-                <button>대댓글 추가</button>
-            </form> -->
-            
-            <ul id="comment-list" th:data-board-id="*{id}">
-            </ul>
-            <form action="/comments/add" id="replyForm" style="display: none;">
+            <hr />            
+            <div id="comment-list" th:data-board-id="*{id}" class="comment-list">
+            </div>
+            <button id="add-comment-btn" class="btn btn-outline-secondary">댓글 더보기</button>
+            <script src="/scripts/board/comment.js"></script>
+        </div>        
+    </body>
+</html>
+            <!-- <form action="/comments/add" id="replyForm" style="display: none;" th:if="${session.user} != null">
                 <input type="text" name="content" placeholder="대댓글 추가" />
                 <input type="hidden" name="user_id" th:value="${session.user}">
                 <input type="hidden" name="board_id" th:value="*{id}">
                 <input type="hidden" name="parent_comment_id" id="parentCommentId" value="*{commentId}">
                 <button type="button" onclick="addReply()">대댓글 추가</button>
-            </form>
-            <script src="/scripts/board/comment.js"></script>
-        </div>        
-    </body>
-</html>
+            </form> -->

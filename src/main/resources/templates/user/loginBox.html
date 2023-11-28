@@ -14,7 +14,8 @@
                 <button type="submit" class="btn btn-secondary btn-sm">로그아웃</button>
             </form>
         </div>
-        <form action="/login" method="post" class="d-flex align-items-center mb-0" th:if="${session.userName == null}" id="loginbox" >
+        <th:block th:if="${session.userName == null}">
+        <form action="/login" method="post" class="d-flex align-items-center mb-0"  id="loginbox" >
             <div class="input-group">
                 <input type="text" class="form-control form-control-sm" placeholder="ID" id="id" name="userId" />
                 <input type="password" class="form-control form-control-sm" placeholder="PW" id="password" name="password" />         
@@ -23,6 +24,7 @@
             <a href="/user/regist"><button type="button" class="btn btn-outline-secondary btn-sm">회원가입</button></a>
         </form>
         <script src="/scripts/user/login.js"></script>
+    </th:block>
     </div>
 </body>
 </html>
