@@ -1,15 +1,21 @@
 package com.kyungiljava4.board.board.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kyungiljava4.board.board.domain.Board;
 import com.kyungiljava4.board.board.service.BoardService;
@@ -124,8 +130,10 @@ public class BoardController {
 				model.addAttribute("msg", "로그인을 안해서 작성못해요");
 				return "redirect:/";
 			}
-
-			boardService.add(new Board(data.get("title"), data.get("content"), userId));
+			String tempContent = data.get("content");
+			tempContent = tempContent.replace("width=\"[0-9]*\"", "width=\"100%\"");
+			tempContent = tempContent.replace("height=\"[0-9]*\"", "height=\"auto\"");
+			boardService.add(new Board(data.get("title"), tempContent, userId));
 
 			return "redirect:/";
 
@@ -134,29 +142,56 @@ public class BoardController {
 		}
 	}
 
-	@PostMapping("/addReply")
-	public String addReply(@RequestParam Map<String, String> data, Model model, HttpSession session) {
-		int userId = (Integer) session.getAttribute("user");
-		int boardId = Integer.parseInt(data.get("boardId"));
-		String comment = data.get("comment");
-		Integer parentReplyId;
-		String parentReplyIdString = data.get("parentReplyId");
-		if (parentReplyIdString == null || parentReplyIdString.isEmpty()) {
-			parentReplyId = null;
-		} else {
-			parentReplyId = Integer.parseInt(parentReplyIdString);
+	@PostMapping("/uploads/image")
+	@ResponseBody
+	public ModelMap uploadImage(MultipartHttpServletRequest req) {
+		ModelMap model = new ModelMap();
+		try {
+			MultipartFile uploadFile = req.getFile("upload");
+			System.out.println(uploadFile.getOriginalFilename());
+			String originName = uploadFile.getOriginalFilename();
+			String[] tempNames = originName.split("[.]");
+//			String ext = originName.substring(originName.indexOf("."));
+			String ext ="." + tempNames[tempNames.length -1];
+			String randomName = UUID.randomUUID() + ext;
+			String savePath = "C:\\Users\\KGA\\eclipse-workspace\\board\\src\\main\\resources\\static\\imgs\\"
+					+ randomName;
+			String uploadUrl = "/imgs/" + randomName;
+			File file = new File(savePath);
+			uploadFile.transferTo(file);
+			model.addAttribute("uploaded", true);
+			model.addAttribute("url",uploadUrl);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
-		Reply reply = new Reply();
-		reply.setBoardId(boardId);
-		reply.setUserId(userId);
-		reply.setContent(comment);
-		reply.setReplyId(parentReplyId);
-
-		replyService.addReply(reply);
-
-		return "redirect:/detail/" + boardId;
+		return model;
 	}
+
+//	@PostMapping("/addReply")
+//	public String addReply(@RequestParam Map<String, String> data, Model model, HttpSession session) {
+//		int userId = (Integer) session.getAttribute("user");
+//		int boardId = Integer.parseInt(data.get("boardId"));
+//		String comment = data.get("comment");
+//		Integer parentReplyId;
+//		String parentReplyIdString = data.get("parentReplyId");
+//		if (parentReplyIdString == null || parentReplyIdString.isEmpty()) {
+//			parentReplyId = null;
+//		} else {
+//			parentReplyId = Integer.parseInt(parentReplyIdString);
+//		}
+//
+//		Reply reply = new Reply();
+//		reply.setBoardId(boardId);
+//		reply.setUserId(userId);
+//		reply.setContent(comment);
+//		reply.setReplyId(parentReplyId);
+//
+//		replyService.addReply(reply);
+//
+//		return "redirect:/detail/" + boardId;
+//	}
 
 //	@GetMapping("/")
 //	public String boardMainPage(Model model) {

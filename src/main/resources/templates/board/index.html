@@ -2,6 +2,7 @@
     <head th:fragment="boardFragmentHead">
         <link rel="stylesheet" href="/styles/index.css" />
         <link rel="stylesheet" href="/styles/board/index.css" />
+        <head th:replace="~{/board/add :: addFragmentHead}"></head>
         <head th:replace="~{/basic/userinfo :: userInfoFragmentHead}"></head>
     </head>
     <body>

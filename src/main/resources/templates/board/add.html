@@ -1,6 +1,7 @@
 <html lang="ko" mxlns:th="http:/www.thymeleaf.org">
     <head th:fragment="addFragmentHead">
         <link rel="stylesheet" href="/styles/index.css" />
+        <link rel="stylesheet" href="/styles/board/add.css" />
     </head>
     <body>
         <div th:if="${session.user != null}" th:fragment="addFragment" class="board container">
@@ -11,10 +12,18 @@
                 </div>
                 <div class="form-floating mb-3">
                     <textarea class="form-control" name="content" placeholder="내용" id="floatingTextarea"></textarea>
-                    <label for="floatingTextarea">내용</label>
+                    <!-- <label for="floatingTextarea">내용</label> -->
                 </div>
                 <button type="submit" class="btn btn-primary">작성</button>
             </form>
+            <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+            <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/translations/ko.js"></script>
+            <script>
+                ClassicEditor.create(document.getElementById("floatingTextarea"),{
+                    language:"ko",
+                    ckfinder:{uploadUrl:"/uploads/image"},
+                });
+            </script>
         </div>
         <div th:if="${session.user == null}"></div>
     </body>

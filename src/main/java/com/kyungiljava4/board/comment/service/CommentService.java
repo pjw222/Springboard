@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kyungiljava4.board.comment.dao.CommentDAO;
+import com.kyungiljava4.board.comment.dao.CommentDAOMysql;
 import com.kyungiljava4.board.comment.domain.Comment;
 
 @Service
 public class CommentService {
 	@Autowired
-	CommentDAO commentDAO;
+	CommentDAOMysql commentDAO;
 	
 	public void add(Comment commnet) {
 		commentDAO.add(commnet);

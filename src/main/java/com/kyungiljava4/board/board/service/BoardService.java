@@ -7,17 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kyungiljava4.board.board.dao.BoardDAO;
+import com.kyungiljava4.board.board.dao.BoardDAOMysql;
 import com.kyungiljava4.board.board.domain.Board;
 import com.kyungiljava4.board.user.dao.UserDAO;
+import com.kyungiljava4.board.user.dao.UserDAOMysql;
 import com.kyungiljava4.board.user.domain.User;
 import com.kyungiljava4.board.user.service.UserService;
 
 @Service
 public class BoardService {
 	@Autowired
-	private BoardDAO boardDAO;
+	private BoardDAOMysql boardDAO;
 	@Autowired
-	private UserDAO userDAO;
+	private UserDAOMysql userDAO;
 	@Autowired
 	private UserService userService;
 	
